@@ -1,10 +1,10 @@
-defmodule Colonies.PlayerBank do
+defmodule Colonies.Player.Bank do
   
-  defstruct name: "", credits: 50, goal: %{type: nil, number: {100, 150, 200}}, resources: %{foodstuffs: 10, water: 10, aluminum: 10} 
+  defstruct credits: 50, resources: %{foodstuffs: 10, water: 10, aluminum: 10} 
   
   # client functions
-  def new(name \\ "npc", type) do
-    %Colonies.PlayerBank{name: name, goal: %{type: type}}
+  def init() do
+    %Colonies.Player.Bank{}
   end
   
   def display(bank) do
@@ -29,7 +29,15 @@ defmodule Colonies.PlayerBank do
     Map.put(bank, :resources, new_resources)
   end
   
+  def edit_resources(bank, []) do
+    IO.puts("all resources edited")
+    bank
+  end
+  
   def edit_resources(bank, [{type, number} | rest]) do
-    
+    edit_resources(
+      edit_resource(bank, {type, number}), 
+      rest
+    )
   end
 end
